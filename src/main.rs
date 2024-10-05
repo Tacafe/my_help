@@ -73,3 +73,26 @@ fn main() {
 
     read_content(&my_help_file_path, keywords);
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use std::env;
+
+    #[test]
+    fn test_get_home_dir_with_hove_env_value() {
+        let home_dir = "/tmp/test_home";
+        env::set_var("HOME", home_dir);
+
+        assert_eq!(get_home_dir(), home_dir);
+
+        env::remove_var("HOME");
+    }
+
+    #[test]
+    fn test_get_home_dir_with_no_env_value() {
+        env::remove_var("HOME");
+
+        assert_eq!(get_home_dir(), "/home");
+    }
+}
